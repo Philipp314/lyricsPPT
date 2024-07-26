@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" name="google" content="notranslate"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      <!--
+        body{
+        background-repeat:no-repeat;
+        background-size:100%;
+        overflow:hidden;
+        background-attachment:fixed;
+        background-position:center top;
+        }
+        div{
+          width:100vw;
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+        }
+        h1{
+          text-shadow: -3px 0 #000000, 0 3px #000000,
+                       3px 0 #000000, 0 -3px #000000;
+          background:#00000000; 
+          width:90%;
+          --fs:calc(100vw * 0.9 / 20);
+          height:calc(var(--line) * var(--fs));
+          font-size:var(--fs);
+          color:#FFFFFF;
+          font-family:'標楷體';
+          text-align:center;
+          line-height:calc(var(--fs) + 5px);
+          letter-spacing:0.05em;
+        }
+        a{
+          text-decoration:none;
+        }
+        span{
+          text-shadow: -1px 0 #000000, 0 1px #000000,
+                       1px 0 #000000, 0 -1px #000000;
+          --fs:calc(50vw * 0.9 / 20);
+          position:fixed;
+          top:15px;
+          right:10px;
+          font-size:var(--fs);
+          font-family:'標楷體';
+          text-decoration:underline;
+          color:#FFFFFF;
+        }
+      -->
+    </style>
+  </head>
+<!----------------------------------------------------------------------------->
+  <body class="notranslate" style="overflow:hidden;">
+    <span id="title"></span>
+    <div>
+      <h1 id="lyrics">
+      </h1>
+    </div>
+    <script language="javascript">
+      <!--
+        window.addEventListener("message", function(e) {
+          console.log(e.data);
+          let lyricsInfo=JSON.parse(e.data);
+          document.body.background=lyricsInfo["背景"];
+          document.getElementById("title").innerHTML=lyricsInfo["標題"];
+          document.getElementById("lyrics").innerHTML=lyricsInfo["內容"].join("<br>");
+        });
+      -->
+    </script>
+  </body>
+</html>

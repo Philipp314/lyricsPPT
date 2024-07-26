@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script language="javascript">
+      <!--
+        function addSong(){
+          var table=document.getElementById("PPTstructure");
+          var row=table.insertRow(-1);
+          for(var j=0;j<3;j++){
+            var cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.cells[0].rowSpan=2;
+          row.cells[0].innerHTML='<input type="text" placeholder="請輸入歌曲標題"/>';
+          row.cells[1].innerHTML='<input type="text" placeholder="請輸入章節標題"/>';
+          row.cells[2].innerHTML='<textarea placeholder="請輸入章節內容" rows="5"></textarea>';
+          row=table.insertRow(-1);
+          for(var j=0;j<3;j++){
+            var cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.deleteCell(0);
+          row.deleteCell(1);
+          row.cells[0].colSpan=2;
+          var obj='<input type="button" onclick="addPage(this)" value="添加章節"/>';
+          row.cells[0].innerHTML=obj;
+        }
+        function addPage(obj){
+          var rowNum=obj.parentNode.parentNode.rowIndex;
+          var table=document.getElementById("PPTstructure");
+          var row=table.insertRow(rowNum);
+          for(var j=0;j<2;j++){
+            var cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.cells[0].innerHTML='<input type="text" placeholder="請輸入章節標題"/>';
+          row.cells[1].innerHTML='<textarea placeholder="請輸入章節內容"rows="5"></textarea>';
+          while(table.rows[rowNum].cells.length!=3)
+          {rowNum--;}
+          table.rows[rowNum].cells[0].rowSpan+=1;
+        }
+        /*
+          [
+            {
+              標題: "song1",
+              page1: ["line1","line2"],
+              page2: ["line1","line2"]
+            },
+            {
+              標題: "song2",
+              page1: ["line1","line2"],
+              page1: ["line1","line2"]
+            }
+          ]
+        */
+        function Output(table){
+          var op=[];
+          var song={};
+          for(var i=0;i<table.rows.length;i++){
+            if(table.rows[i].cells.length==3){
+              op.push(song);
+              song={};
+              song["標題"]=table.rows[i].cells[0].firstChild.value;
+              song[table.rows[i].cells[1].firstChild.value]=
+              table.rows[i].cells[2].firstChild.value.split("\n");
+            }
+            else if(table.rows[i].cells.length==2){
+              song[table.rows[i].cells[0].firstChild.value]=
+              table.rows[i].cells[1].firstChild.value.split("\n");
+            }
+            else{}
+          }
+          op.push(song);
+          op.shift();
+          document.getElementById("output").value=JSON.stringify(op);
+        }
+      -->
+    </script>
+<!----------------------------------------------------------------------------->
+    <style type="text/css">
+      <!--
+        #output{
+          height:100%;
+          width:100%;
+        }
+        input{
+          width:8em;
+        }
+      -->
+    </style>
+  </head>
+<!----------------------------------------------------------------------------->
+  <body>
+    <table border="1" height="100%">
+      <tr>
+        <td style="width:50vw;">
+          <table id="PPTstructure" border="1" onchange="Output(this)">
+            
+          </table>
+          <input type="button" value="添加歌曲" onclick="addSong()"/>
+        </td>
+        <td style="width:50vw;">
+          <textarea id="output" placeholder="JSON輸出"></textarea>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

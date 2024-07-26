@@ -1,0 +1,99 @@
+[
+  {
+    "標題": "歌曲一",
+    "背景": "background/17.jpg",
+    "歌詞": [
+      [
+        "這是主歌歌詞",
+        "這是主歌歌詞",
+        "這是主歌歌詞"
+      ],
+      [
+        "這是副歌歌詞",
+        "這是副歌歌詞"
+      ]
+    ]
+  },
+  {
+    "標題": "歌曲二",
+    "背景": "background/1.gif",
+    "歌詞": [
+      [
+        "主歌歌詞",
+        "主歌歌詞 主歌歌詞",
+        "主歌歌詞 主歌歌詞",
+        "主歌歌詞"
+      ],
+      [
+        "副歌歌詞 副歌歌詞",
+        "副歌歌詞 副歌歌詞"
+      ],
+      [
+        "橋段歌詞"
+      ]
+    ]
+  },
+  {
+    "標題": "歌曲三",
+    "背景": "background/13.jpg",
+    "歌詞": [
+      [
+        "Verse lyrics",
+        "This is Verse lyrics",
+        "Verse lyrics"
+      ],
+      [
+        "Chorus lyrics",
+        "Chorus lyrics",
+        "Chorus lyrics"
+      ]
+    ]
+  },
+  {
+    "標題": "歌曲四",
+    "背景": "background/7.jpg",
+    "歌詞": [
+      [
+        "Verse lyrics",
+        "This is Verse lyrics",
+        "This is Verse lyrics",
+        "Verse lyrics"
+      ],
+      [
+        "Chorus lyrics",
+        "Chorus lyrics",
+        "Chorus lyrics"
+      ],
+      [
+        "Bridge lyrics"
+      ]
+    ]
+  },
+  {
+    "標題": "歌曲五",
+    "背景": "background/2.gif",
+    "歌詞": [
+      [
+        "我實在是沒招了",
+        "這首歌就隨便寫點東西吧",
+        "點東西"
+      ],
+      [
+        "東西 東西 東西",
+        "東西 東西 東西"
+      ]
+    ]
+  },
+  {
+    "標題": "歌曲六",
+    "背景": "background/15.jpg",
+    "歌詞": [
+      [
+        "這首歌曲",
+        "只有一頁",
+        "沒錯",
+        "就只有一頁"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" name="google" content="notranslate"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css" id="jsonMaker">
+      <!--
+        table{
+          width:100%;
+          text-align:center;
+        }
+        
+        #transferArea>textarea{
+          height:90%;
+        }
+        textarea{
+          width:97%;
+          font-size:2em;
+        }
+        button{
+          font-size:4em;
+          color:#fff;
+          background-color:#f00;
+          border:0px;
+          width:100%;
+          height:100%;
+        }
+        
+        label {
+          display:inline;
+          width:8em;
+          font-size:2em;
+          display: inline-block;
+          padding: 10px 0px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+          background-color: #007bff;
+          color: white;
+          font-weight: 400;
+          text-align: center;
+          text-decoration: none;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        label:hover {
+          background-color: #0056b3;
+        }
+        input[type="button"]{display:none;}
+      -->
+    </style>
+  </head>
+<!----------------------------------------------------------------------------->
+  <body class="notranslate">
+    <div id="transferArea">
+      <table id="PPTstructure" border="1"></table>
+    </div>
+    <br>
+    <div id="UI">
+      <label>添加歌曲<input type="button" onclick="addSong()"/></label>
+      <br>
+      <br>
+      <label style="width:4em;">
+          匯入
+          <input type="file" id="fileSelector" style="display:none;" onchange="input(this)"/>
+      </label>
+      <label style="width:4em;">匯出<input type="button" onclick="output()"/></label>
+      <br>
+      <br>
+      <label>開始播放<input type="button" onclick="start()"/></label>
+    </div>
+    <script language="javascript" id="song_ans_page">
+      <!--
+        function addSong(){
+          let table=document.getElementById("PPTstructure");
+        
+          let row=table.insertRow(-1);
+          for(let j=0;j<3;j++){
+            let cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.cells[0].rowSpan=2;
+          row.cells[0].style.width="5em";
+          row.cells[0].innerHTML='<input type="text" placeholder="歌曲標題" style="font-size:3em;width:4em;"/>';
+          row.cells[0].innerHTML+='<br><br>';
+          row.cells[0].innerHTML+='<input type="text" placeholder="背景網址"/>';
+          let obj='<label>添加章節<input type="button" onclick="addPage(this)"/></label>';
+          row.cells[1].innerHTML=obj;
+          row.cells[2].innerHTML='<button type="button" onclick="deletSong(this)">×</button>';
+          
+          row=table.insertRow(-1);
+          for(let j=0;j<2;j++){
+            let cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.cells[0].innerHTML='<textarea placeholder="請輸入章節內容" rows="5"></textarea>';
+          row.cells[1].innerHTML='<button type="button" onclick="deletRow(this)">×</button>';
+          
+        }
+        function addPage(obj){
+          let row=obj.parentNode.parentNode.parentNode;
+          row.cells[0].rowSpan+=1;
+          let table=document.getElementById("PPTstructure");
+          let rowNum=obj.parentNode.parentNode.parentNode.rowIndex;
+          rowNum+=row.cells[0].rowSpan-1;
+          table.insertRow(rowNum)
+          row=table.rows[rowNum];
+          for(let j=0;j<2;j++){
+            let cell=row.insertCell(j);
+            cell.innerHTML="&nbsp;";
+          }
+          row.cells[0].innerHTML='<textarea placeholder="請輸入章節內容"rows="5"></textarea>';
+          row.cells[1].innerHTML='<button type="button" onclick="deletRow(this)">×</button>';
+        }
+        function deletRow(obj){
+          let table=document.getElementById("PPTstructure");
+          let rowNum=obj.parentNode.parentNode.rowIndex;
+          while(table.rows[rowNum].cells.length!=3)
+          {rowNum--;}
+          table.rows[rowNum].cells[0].rowSpan-=1;
+          obj.parentNode.parentNode.remove();
+        }
+        function deletSong(obj){
+          let table=document.getElementById("PPTstructure");
+          let rowNum=obj.parentNode.parentNode.rowIndex;
+          rowNum+=obj.parentNode.parentNode.firstElementChild.rowSpan-1;
+          while(table.rows[rowNum].cells.length!=3){
+            table.rows[rowNum].remove();
+            rowNum--;
+          }
+          table.rows[rowNum].remove();
+        }
+      -->
+    </script>
+    <script language="javascript" id="input_and_output">
+      function download(data, filename = '匯出.json') {
+        
+        // 將對象轉為 JSON 字串
+        let jsonString = JSON.stringify(data, null, 2);
+        
+        // 創建一個 Blob 對象
+        let blob = new Blob([jsonString], { type: 'application/json' });
+
+        // 創建一個 URL 對象
+        let url = URL.createObjectURL(blob);
+
+        // 創建一個隱藏的下載連結
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = filename; // 指定下載文件的名稱
+        document.body.appendChild(a);
+        a.click(); // 模擬點擊連結以觸發下載
+        document.body.removeChild(a); // 移除連結
+        URL.revokeObjectURL(url); // 釋放內存
+      }
+      
+      function table2value(){
+        let table=document.getElementById("PPTstructure");
+        let op=[];
+        let song={};
+        let lyrics=[];
+        for(let i=0;i<table.rows.length;i++){
+          if(table.rows[i].cells.length==3){
+            song["歌詞"]=lyrics;
+            lyrics=[]
+            op.push(song);
+            song={};
+            song["標題"]=table.rows[i].cells[0].firstChild.value;
+            song["背景"]=table.rows[i].cells[0].lastChild.value;
+          }
+          else{
+            lyrics.push(table.rows[i].cells[0].firstChild.value.split("\n"));
+          }
+        }
+        song["歌詞"]=lyrics;
+        op.push(song);
+        op.shift();
+        return(op);
+      }
+      
+      function input(fileinfo){
+        let file = fileinfo.files[0];
+        let fReader = new FileReader();
+        fReader.onload = function (event){
+          lyricsFile=JSON.parse(event.target.result);
+          console.log(lyricsFile);
+          input2table(lyricsFile);
+        };
+        fReader.readAsText(file);
+        Clear();
+      }
+      function Clear()
+      {document.getElementById("fileSelector").style.display="none";}
+      
+      function output(){
+        download(table2value());
+      }
+      
+      function input2table(data){
+        let table=document.getElementById("PPTstructure");
+        table.innerHTML="";
+        let nowRow=-1;
+        let songRow=null;
+        for(let i=0;i<data.length;i++){
+          addSong();
+          nowRow++;
+          table.rows[nowRow].cells[0].firstChild.value=data[i]["標題"];
+          console.log(table.rows[nowRow].cells[0].firstChild);
+          table.rows[nowRow].cells[0].lastChild.value=data[i]["背景"];
+          songRow=nowRow;
+          nowRow++;
+          table.rows[nowRow].cells[0].firstChild.value=data[i]["歌詞"][0].join("\n");
+          for(let j=1;j<data[i]["歌詞"].length;j++){
+            table.rows[songRow].cells[1].firstChild.click();
+            nowRow++;
+            table.rows[nowRow].cells[0].firstChild.value=data[i]["歌詞"][j].join("\n");
+          }
+        }
+      }
+    </script>
+    <script language="javascript" id="start_PPT">
+      var childWindow=null;
+      var lyricsValue;
+      function start(){
+        document.getElementById("UI").style.display="none";
+        lyricsValue=table2value();
+        childWindow = window.open("show.html", "setPage", 'status=yes,toolbar=yes,menubar=yes,location=yes');
+        makeOrderTable();
+      }
+      function songLengthChack(){
+        let maxLen=[];
+        let nowSong=0;
+        let rowMax=0;
+        do{
+          if(lyricsValue[nowSong]['歌詞'].length>rowMax)
+          {rowMax=lyricsValue[nowSong]['歌詞'].length;}
+          if(nowSong%5==4){
+            maxLen.push(rowMax);
+            rowMax=0; 
+          }
+          nowSong++;
+        }while(nowSong<lyricsValue.length);
+        if(nowSong%5!=4)
+        {maxLen.push(rowMax);}
+        return(maxLen);
+      }
+      function calcNeedRow(arr){
+        let op=0;
+        for(let i=0;i<arr.length;i++){
+          op+=2;
+          op+=arr[i];
+        }
+        return(op);
+      }
+      function makeOrderTable(){
+        let table=document.getElementById("PPTstructure");
+        table.innerHTML="";
+        table.style.width="100%";
+        table.style.height="100%";
+        table.style.fontSize="15px";
+        let maxLen=songLengthChack();
+        //let NeedRow=calcNeedRow(maxLen);
+        for(let i=0;i<maxLen.length;i++){
+          let row=table.insertRow(-1);
+          let cell=row.insertCell(0);
+          cell.colSpan=5;
+          cell.innerHTML="&nbsp;";
+          row=table.insertRow(-1);
+          for(let j=0;j<5;j++){
+            cell=row.insertCell(j);
+            cell.setAttribute("onclick",`sandMessage(${i*5+j},-1)`);
+            try
+            {cell.innerHTML=lyricsValue[i*5+j]['標題'];}
+            catch (error)
+            {cell.innerHTML="";}
+          }
+          for(let j=0;j<maxLen[i];j++){
+            row=table.insertRow(-1);
+            for(let k=0;k<5;k++){
+              cell=row.insertCell(k);
+              cell.setAttribute("onclick",`sandMessage(${i*5+k},${j})`);
+              try
+              {cell.innerHTML=lyricsValue[i*5+k]['歌詞'][j].join('<br>');}
+              catch (error)
+              {cell.innerHTML="";}
+            }
+          }
+        }
+      }
+      function sandMessage(songId,pageId){
+        let message={};
+        message["標題"]=lyricsValue[songId]["標題"];
+        message["背景"]=lyricsValue[songId]["背景"];
+        message["內容"]=lyricsValue[songId]["歌詞"][pageId];
+        if(pageId==-1)
+        {message["內容"]=[];}
+        childWindow.postMessage(JSON.stringify(message), "*");
+      }
+    </script>
+  </body>
+</html>
