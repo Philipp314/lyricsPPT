@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON File Sorter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f7fa;
+        }
 
+        #dropzone {
+            width: 80%;
+            height: 150px;
+            border: 2px dashed #0277bd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #e1f5fe;
+            color: #01579b;
+        }
+
+        #jsonList {
+            width: 80%;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #0277bd;
+            padding: 10px;
+            background-color: #e1f5fe;
+        }
+
+        #jsonList div {
+            padding: 5px;
+            border: 1px solid #0277bd;
+            margin: 5px 0;
+            background-color: #b3e5fc;
+            cursor: move;
+            color: #01579b;
+            text-align:center;
+            font-size:20px;
+        }
+
+        #exportBtn {
+            padding: 10px 20px;
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #exportBtn:hover {
+            background-color: #0277bd;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="dropzone">拖放您的JSON文件到這裡</div>
+<div id="jsonList"></div>
+<button id="exportBtn">導出排序後的JSON</button>
+
+<script>
+    const dropzone = document.getElementById('dropzone');
+    const jsonList = document.getElementById('jsonList');
+    const exportBtn = document.getElementById('exportBtn');
+    let jsonData = [];
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = 'green';
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.style.borderColor = '#ccc';
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.style.borderColor = '#ccc';
+        const files = Array.from(e.dataTransfer.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const json = JSON.parse(event.target.result);
+                    if(Array.isArray(json)){
+                      for(let i=0;i<json.length;i++)
+                      {jsonData.push(json[i]);}
+                    }else
+                    {jsonData.push(json);}
+                    renderJsonList();
+                } catch (error) {
+                    alert('無法解析JSON文件: ' + file.name);
+                }
+            };
+            reader.readAsText(file);
+        });
+    });
+
+    function renderJsonList() {
+        jsonList.innerHTML = '';
+        jsonData.forEach((data, index) => {
+            const div = document.createElement('div');
+            div.textContent = data["標題"];
+            div.setAttribute('draggable', true);
+            div.setAttribute('data-index', index);
+            jsonList.appendChild(div);
+        });
+        addDragAndDropListeners();
+    }
+
+    function addDragAndDropListeners() {
+        const divs = jsonList.querySelectorAll('div');
+        divs.forEach(div => {
+            div.addEventListener('dragstart', handleDragStart);
+            div.addEventListener('dragover', handleDragOver);
+            div.addEventListener('drop', handleDrop);
+        });
+    }
+
+    function handleDragStart(e) {
+        e.dataTransfer.setData('text/plain', e.target.dataset.index);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const draggedIndex = e.dataTransfer.getData('text/plain');
+        const targetIndex = e.target.dataset.index;
+        if (draggedIndex !== targetIndex) {
+            const draggedData = jsonData.splice(draggedIndex, 1)[0];
+            jsonData.splice(targetIndex, 0, draggedData);
+            renderJsonList();
+        }
+    }
+
+    exportBtn.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sorted_data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+</script>
+
+</body>
+</html>
