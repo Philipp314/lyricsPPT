@@ -1,7 +1,7 @@
 [
   {
     "標題": "歌曲一",
-    "背景": "background/17.jpg",
+    "背景": "background/jpg/15.jpg",
     "歌詞": [
       [
         "這是主歌歌詞",
@@ -16,7 +16,7 @@
   },
   {
     "標題": "歌曲二",
-    "背景": "background/1.gif",
+    "背景": "background/gif/1.gif",
     "歌詞": [
       [
         "主歌歌詞",
@@ -35,7 +35,7 @@
   },
   {
     "標題": "歌曲三",
-    "背景": "background/13.jpg",
+    "背景": "background/jpg/13.jpg",
     "歌詞": [
       [
         "Verse lyrics",
@@ -51,7 +51,7 @@
   },
   {
     "標題": "歌曲四",
-    "背景": "background/7.jpg",
+    "背景": "background/jpg/7.jpg",
     "歌詞": [
       [
         "Verse lyrics",
@@ -71,7 +71,7 @@
   },
   {
     "標題": "歌曲五",
-    "背景": "background/2.gif",
+    "背景": "background/gif/2.gif",
     "歌詞": [
       [
         "我實在是沒招了",
@@ -86,7 +86,7 @@
   },
   {
     "標題": "歌曲六",
-    "背景": "background/15.jpg",
+    "背景": "background/gif/6.gif",
     "歌詞": [
       [
         "這首歌曲",
