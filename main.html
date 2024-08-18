@@ -80,10 +80,10 @@
           }
           row.cells[0].rowSpan=2;
           row.cells[0].style.width="5em";
-          row.cells[0].innerHTML='<input type="text" placeholder="歌曲標題" style="font-size:3em;width:4em;"/>';
+          row.cells[0].innerHTML='<input type="text" placeholder="歌名" style="font-size:3em;width:4em;"/>';
           row.cells[0].innerHTML+='<br><br>';
           row.cells[0].innerHTML+='<input type="text" placeholder="背景網址"/>';
-          let obj='<label>添加章節<input type="button" onclick="addPage(this)"/></label>';
+          let obj='<label>添加歌曲段落<input type="button" onclick="addPage(this)"/></label>';
           row.cells[1].innerHTML=obj;
           row.cells[2].innerHTML='<button type="button" onclick="deletSong(this)">×</button>';
           
@@ -92,7 +92,7 @@
             let cell=row.insertCell(j);
             cell.innerHTML="&nbsp;";
           }
-          row.cells[0].innerHTML='<textarea placeholder="請輸入章節內容" rows="5"></textarea>';
+          row.cells[0].innerHTML='<textarea placeholder="請輸入段落內容" rows="5"></textarea>';
           row.cells[1].innerHTML='<button type="button" onclick="deletRow(this)">×</button>';
           
         }
@@ -108,7 +108,7 @@
             let cell=row.insertCell(j);
             cell.innerHTML="&nbsp;";
           }
-          row.cells[0].innerHTML='<textarea placeholder="請輸入章節內容"rows="5"></textarea>';
+          row.cells[0].innerHTML='<textarea placeholder="請輸入段落內容"rows="5"></textarea>';
           row.cells[1].innerHTML='<button type="button" onclick="deletRow(this)">×</button>';
         }
         function deletRow(obj){
