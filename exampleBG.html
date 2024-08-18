@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>範例背景</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1 {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .section {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery img {
+            margin: 10px;
+            border: 3px solid #007bff;
+            border-radius: 12px;
+            width: 160px;
+            height: 90px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .notification {
+            font-size: 18px;
+            color: #007bff;
+            margin-top: 20px;
+        }
+        .section-title {
+            font-size: 1.8em;
+            color: #007bff;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>範例背景</h1>
+    <h3>點擊圖片即可複製連結</h3>
+    <div class="container">
+        <div class="section" id="static-gallery-section">
+            <div class="section-title">靜態圖片</div>
+            <div class="gallery" id="static-gallery">
+                <img src="background/jpg/1.jpg" alt="靜態圖片1" data-url="background/jpg/1.jpg">
+                <img src="background/jpg/2.jpg" alt="靜態圖片2" data-url="background/jpg/2.jpg">
+                <img src="background/jpg/3.jpg" alt="靜態圖片3" data-url="background/jpg/3.jpg">
+                <img src="background/jpg/4.jpg" alt="靜態圖片4" data-url="background/jpg/4.jpg">
+                <img src="background/jpg/5.jpg" alt="靜態圖片5" data-url="background/jpg/5.jpg">
+                <img src="background/jpg/6.jpg" alt="靜態圖片6" data-url="background/jpg/6.jpg">
+                <img src="background/jpg/7.jpg" alt="靜態圖片7" data-url="background/jpg/7.jpg">
+                <img src="background/jpg/8.jpg" alt="靜態圖片8" data-url="background/jpg/8.jpg">
+                <img src="background/jpg/9.jpg" alt="靜態圖片9" data-url="background/jpg/9.jpg">
+                <img src="background/jpg/10.jpg" alt="靜態圖片10" data-url="background/jpg/10.jpg">
+                <img src="background/jpg/11.jpg" alt="靜態圖片11" data-url="background/jpg/11.jpg">
+                <img src="background/jpg/12.jpg" alt="靜態圖片12" data-url="background/jpg/12.jpg">
+                <img src="background/jpg/13.jpg" alt="靜態圖片13" data-url="background/jpg/13.jpg">
+                <img src="background/jpg/14.jpg" alt="靜態圖片14" data-url="background/jpg/14.jpg">
+                <img src="background/jpg/15.jpg" alt="靜態圖片15" data-url="background/jpg/15.jpg">
+            </div>
+        </div>
+
+        <div class="section" id="dynamic-gallery-section">
+            <div class="section-title">動態圖片</div>
+            <div class="gallery" id="dynamic-gallery">
+                <img src="background/gif/1.gif" alt="動態圖片1" data-url="background/gif/1.gif">
+                <img src="background/gif/2.gif" alt="動態圖片2" data-url="background/gif/2.gif">
+                <img src="background/gif/3.gif" alt="動態圖片3" data-url="background/gif/3.gif">
+                <img src="background/gif/4.gif" alt="動態圖片4" data-url="background/gif/4.gif">
+                <img src="background/gif/5.gif" alt="動態圖片5" data-url="background/gif/5.gif">
+                <img src="background/gif/6.gif" alt="動態圖片6" data-url="background/gif/6.gif">
+                <img src="background/gif/7.gif" alt="動態圖片7" data-url="background/gif/7.gif">
+                <img src="background/gif/8.gif" alt="動態圖片8" data-url="background/gif/8.gif">
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                navigator.clipboard.writeText(url).then(() => {
+                    document.getElementById('notification').textContent = '圖片連結已複製到剪貼簿！';
+                }).catch(err => {
+                    document.getElementById('notification').textContent = '複製失敗！';
+                    console.error('複製連結時發生錯誤:', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
