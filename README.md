@@ -133,3 +133,12 @@
 
 這個工具的連結: [https://philipp314.github.io/lyricsPPT/join_json.html
 ](https://philipp314.github.io/lyricsPPT/join_json.html)。
+
+## 3. 範例JSON文件
+
+為了幫助您快速上手並瞭解本工具的使用方法，我們提供了一個JSON檔案範例，您可以使用這個檔案進行練習和測試。
+
+您可以從以下連結下載範例檔案：[https://philipp314.github.io/lyricsPPT/test.json
+](https://philipp314.github.io/lyricsPPT/test.json)。
+
+
